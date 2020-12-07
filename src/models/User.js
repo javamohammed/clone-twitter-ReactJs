@@ -1,5 +1,13 @@
 export default class User {
 
+    constructor(props) {
+        for (const [key, value] of Object.entries(props)) {
+                 //console.log(`${key}: ${value}`);
+                  this[key] = value
+           }
+     }
+
+    /*
     constructor(id,
                 name,
                 email,
@@ -39,6 +47,7 @@ export default class User {
                     this.created_at = created_at
                     this.updated_at = updated_at
                  }
+                 */
 
 
 

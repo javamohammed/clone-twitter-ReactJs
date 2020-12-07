@@ -15,7 +15,7 @@ const MenuList = () => {
                 <Item src="images/icons_1/signets.svg" label="Signets" to="/signets" />
                 <Item src="images/icons_1/lists.svg" label="Lists"  to="/lists" />
                 <Item src="images/icons_1/profil.svg" label="Profil" to="/profile" />
-                <Item src="images/icons_1/plus.svg" label="Plus" to="/" />
+                <Item src="images/icons_1/plus.svg" label="Se déconnecter" to="/logout" />
             
         </div>
     )

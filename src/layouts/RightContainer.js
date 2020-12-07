@@ -1,6 +1,7 @@
 import React from 'react';
 import HappenList from '../components/UI/WhatIsHappening/HappenList';
 import SuggestionList from '../components/UI/Suggestions/SuggestionList';
+import "../css/home.css";
 
 function RightContainer() {
   return (

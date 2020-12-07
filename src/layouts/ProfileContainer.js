@@ -1,9 +1,51 @@
-import React from 'react'
+import React,{ useEffect}  from 'react'
 import "../css/profile.css";
+import { logout } from "../store/actions/user";
+import { getAllByUser } from '../store/actions/tweet';
+import { useSelector, useDispatch } from "react-redux";
 import Card from '../components/UI/Card';
-const ProfileContainer = () => {
+import LeftContainer from "./LeftContainer";
+import RightContainer from "./RightContainer";
+import {createBrowserHistory} from 'history'
+
+const ProfileContainer = props => {
+
+    if(props.logout){
+      logout()
+      console.log("Logout....")
+      const history = createBrowserHistory();
+      history.go(0)
+      //return  Redirect("/login")
+    }
+    const dispatch = useDispatch()
+    const tweets = useSelector(state => state.tweet.tweets)
+    const user = useSelector(state => state.user.user)
+    useEffect(() => {
+      dispatch(getAllByUser(user.id))
+    }, [dispatch, user])
+
+    const showCards = () =>{
+      if (tweets.length !== 0) {
+        return tweets.map(tweet => {
+          let liked = 0;
+          tweet.likes.map(like => {
+            if(user.id == like.user.id){
+              liked = 1
+            }
+          })
+          const likeSrc = liked == 0 ? 'images/icons_0/like.svg' : 'images/icons_0/like_red.svg'
+        return <Card  likesrc={likeSrc} username={tweet.user.id} countweets={tweet.countLikes}  name={tweet.user.name} src="./images/avatar-home.png" time="2 min" key={tweet.id} >{tweet.tweet_text}</Card>;
+        });
+      }
+      return <p>Loading...</p>;
+    }
+    
     return (
-         <div className="col-sm-6 border centered-div">
+
+      <div className="container">
+        <div className="row">
+        <LeftContainer />
+        <div className="col-sm-6 border centered-div">
             <div className="row justify-content-md-center border border-top-0 mt-2">
                 <div className="col-sm float-left ">
                   <img src="images/icons_profile/back.svg" className="icon-back" alt=""  />
@@ -39,11 +81,13 @@ const ProfileContainer = () => {
                   </div>
                 </div>
               </div>
-              <Card username="@hdhdhd" name="Jon Vito" src="./images/avatar-home.png" time="2 min"/>
-              <Card username="@hdhdhd" name="Jon Hola" src="./images/avatar-home.png" time="2 min"/>
-              <Card username="@hdhdhd" name="Jon Vito" src="./images/avatar-home.png" time="2 min"/>
+              {showCards()}
 
           </div>
+          <RightContainer/>
+        </div>  
+      </div>
+        
     )
 }
 
