@@ -8,6 +8,9 @@ import MainContainer from "./layouts/MainContainer";
 import ProfileContainer from "./layouts/ProfileContainer";
 import LoginContainer from "./layouts/LoginContainer";
 import RegisterContainer from "./layouts/RegisterContainer";
+import CommentsContainer from "./layouts/CommentsContainer";
+import BookmarksContainer from "./layouts/BookmarksContainer";
+
 const  App = () => {
   const dispatch = useDispatch()
   const user = useSelector(state => state.user.user)
@@ -27,6 +30,8 @@ const  App = () => {
             <Switch>
               <Route exact path="/" component={MainContainer} />
               <Route  path="/profile" component={ProfileContainer} />
+              <Route  path="/bookmarks" component={BookmarksContainer} />
+              <Route  path="/comments/:tweetId" component={CommentsContainer} />
               <Route  path="/logout" render={()=> <ProfileContainer logout="yes" />} />
               <Redirect to="/" />
             </Switch>)

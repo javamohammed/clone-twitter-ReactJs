@@ -51,25 +51,52 @@ const InputText = props => {
         if (props.minLength != null && text.length < props.minLength) {
           isValid = false;
         }
+        /*
+        if (props.setEmpty  && props.setEmpty === true) {
+          isValid = true;
+          text = ""
+        }*/
         dispatch({ type: INPUT_CHANGE, value: text, isValid: isValid });
         };
         const lostFocusHandler = () => {
           dispatch({ type: INPUT_BLUR });
     };
+      let CustomInput = (
+                      <input
+                      type={props.type}
+                      className={props.styleInput}
+                      id={props.id}
+                      name={props.name}
+                      placeholder={props.placeholder}
+                      value={inputState.value}
+                      onChange={event => {
+                      textChangeHandler(event.target.value);
+                      }}
+                      onBlur={lostFocusHandler}
+                  />
+          )
+      if(props.type == 'textarea'){
+          CustomInput = (
+            <textarea 
+              cols={props.cols} 
+              rows={props.rows} 
+              className={props.styleInput} 
+              id={props.id} 
+              style={props.style}
+              name={props.name} 
+              placeholder={props.placeholder} 
+              value={inputState.value}
+              onChange={event => {
+                textChangeHandler(event.target.value);
+                }}
+                onBlur={lostFocusHandler}
+                >
 
+            </textarea>
+          )
+      }
     return <>
-                <input
-                    type={props.type}
-                    className={props.styleInput}
-                    id={props.id}
-                    name={props.name}
-                    placeholder={props.placeholder}
-                    value={inputState.value}
-                    onChange={event => {
-                    textChangeHandler(event.target.value);
-                    }}
-                    onBlur={lostFocusHandler}
-                />
+                {CustomInput}
                 {!inputState.isValid && inputState.touched && (
                 <p style={{color:"red", fontSize:10}}>{props.errorText}</p>
                 )}
